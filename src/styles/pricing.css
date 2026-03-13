@@ -1,0 +1,160 @@
+/* ==== MAXIMUM FLOATING + 3D DANCE + FLOATING HEADER ==== */
+
+.pricing-page {
+  padding-top: 96px;
+  perspective: 1000px;
+}
+
+/* Floating Glass Header */
+.pricing-hero.glass {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 14px 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  animation: heroFloat 8s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-hero.glass:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.pricing-hero h1 {
+  font-weight: 800;
+}
+
+.hero-note {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Left-Aligned Controls */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.gender-group, .tabs-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ===== CARD FLOAT & DANCE ===== */
+.pricing-card {
+  transform-style: preserve-3d;
+  animation: cardDance 7s ease-in-out infinite;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-22px)
+             rotateX(calc(var(--tiltX, 0deg) * 1.2))
+             rotateY(calc(var(--tiltY, 0deg) * 1.2));
+  box-shadow: 0 36px 90px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes cardDance {
+  0% { transform: translateY(0) rotateZ(0deg); }
+  25% { transform: translateY(-16px) rotateZ(0.8deg); }
+  50% { transform: translateY(0) rotateZ(0deg); }
+  75% { transform: translateY(10px) rotateZ(-0.8deg); }
+  100% { transform: translateY(0) rotateZ(0deg); }
+}
+
+/* stagger animation timings */
+.row .pricing-card:nth-child(3n+1){ animation-delay: 0s; }
+.row .pricing-card:nth-child(3n+2){ animation-delay: 1s; animation-duration: 8s; }
+.row .pricing-card:nth-child(3n+3){ animation-delay: 2s; animation-duration: 9s; }
+
+/* Price Tag */
+.price-tag {
+  background: rgba(147, 255, 208, 0.1);
+  border: 1px solid rgba(147, 255, 208, 0.3);
+  border-radius: 12px;
+  padding: 4px 10px;
+  color: #8ef0bd;
+  font-weight: 700;
+}
+
+/* Better readability */
+.card-title { color: #fff; }
+.text-muted, li, small { color: rgba(255,255,255,0.75) !important; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pricing-card, .pricing-hero.glass { animation: none; }
+}
+
+/* ================== CONTRAST FIX: Add-ons + Combo cards ================== */
+/* Theme tokens for readable text */
+:root{
+  --ink-strong: #0e1220;                /* for light theme */
+  --ink-soft:   rgba(14,18,32,.70);
+}
+[data-theme="dark"]{
+  --ink-strong: #e9edf7;                /* for dark theme */
+  --ink-soft:   rgba(233,237,247,.80);
+}
+
+/* Make ALL text inside pricing cards readable, overriding Bootstrap */
+.pricing-page .card.pricing-card,
+.pricing-page .card.pricing-card * { color: var(--ink-soft); }
+
+.pricing-page .card.pricing-card .card-title,
+.pricing-page .card.pricing-card h5,
+.pricing-page .card.pricing-card h6,
+.pricing-page .card.pricing-card .fw-bold {
+  color: var(--ink-strong) !important;
+}
+
+.pricing-page .card.pricing-card .text-muted,
+.pricing-page .card.pricing-card small,
+.pricing-page .card.pricing-card li,
+.pricing-page .card.pricing-card p {
+  color: var(--ink-soft) !important;
+}
+
+/* Price chip remains distinct */
+.pricing-page .card.pricing-card .price-tag { color: inherit; }
+
+/* Struck-through MRP: softer but still visible */
+.pricing-page .card.pricing-card .text-decoration-line-through {
+  color: color-mix(in oklab, var(--ink-soft) 80%, transparent) !important;
+}
+
+/* Buttons inside dark cards: readable text/borders */
+[data-theme="dark"] .pricing-page .card.pricing-card .btn-outline-dark{
+  color: var(--ink-strong) !important;
+  border-color: rgba(233,237,247,.35) !important;
+}
+[data-theme="dark"] .pricing-page .card.pricing-card .btn-outline-dark:hover{
+  background: rgba(233,237,247,.10);
+}
+
+/* Badge text stays readable even if theme overrides occur */
+.pricing-page .card.pricing-card .badge{ filter: saturate(1.1) contrast(1.1); }
+
+/* Ensure add-on & package cards also get the dance even if a different class slips in */
+.pricing-page .card:not(.pricing-card){
+  animation: cardDance 8.5s ease-in-out infinite;
+}
+.pricing-page .card:not(.pricing-card):hover{
+  transform: translateY(-18px);
+}

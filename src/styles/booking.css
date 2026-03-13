@@ -1,0 +1,106 @@
+/* === Booking — floating glass, stepper, hover lift, sticky summary === */
+
+.booking { perspective: 900px; }
+
+/* Glass cards (panels & summary) */
+.glass{
+  background: linear-gradient(180deg, rgba(30,35,48,.85), rgba(22,26,35,.78));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="light"] .glass{
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88));
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 10px 26px rgba(0,0,0,.12);
+}
+
+/* Panels (steps) */
+.panel{ padding: 14px 16px 16px; transform-style: preserve-3d;
+  animation: panelBob 9s ease-in-out infinite;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s cubic-bezier(.2,.8,.2,1);
+}
+.panel:hover{ transform: translateY(-10px) rotateX(1deg); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.panel-h{ padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,.12); margin-bottom: 12px; }
+[data-theme="light"] .panel-h{ border-bottom-color: rgba(0,0,0,.08); }
+.panel-f{ margin-top: 14px; }
+.panel.hide{ display:none; } .panel.show{ display:block; }
+
+/* Stepper */
+.stepper{ display:flex; align-items:center; gap:10px; padding:8px 12px; }
+.step-dot{ position:relative; display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); }
+.step-dot.active{ background: rgba(147,255,208,.14); border-color: rgba(147,255,208,.35); }
+.step-dot span{ width:22px; height:22px; display:inline-grid; place-items:center; border-radius:999px; font-weight:800; font-size:.85rem; background:#1f2430; color:#fff; }
+[data-theme="light"] .step-dot span{ background:#1e293b; color:#fff; }
+.step-dot em{ font-style: normal; opacity:.85; font-weight:600; }
+.step-line{ height:2px; flex:1; background: linear-gradient(90deg, transparent, rgba(255,255,255,.24), transparent); }
+
+/* Inputs */
+.preview{ max-width:240px; border-radius:10px; margin-top:8px; display:block; }
+
+/* === SELECT DROPDOWN FIX (dark mode readability) === */
+.form-select{
+  background-color: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.2);
+  color: #e9edf7;
+}
+[data-theme="light"] .form-select{
+  background-color: rgba(255,255,255,.9);
+  color: #0f172a;
+}
+/* Native popup (what you saw in the screenshot) */
+.form-select option, .form-select optgroup{
+  color: #0f172a !important;                 /* dark-on-light inside the popup */
+  background: #ffffff !important;
+}
+.form-select option:disabled{ color: #9aa4b2 !important; }
+/* Focus ring */
+.form-select:focus{ box-shadow: 0 0 0 .2rem rgba(99,102,241,.25); outline: none; }
+
+/* Summary */
+.summary{ position: sticky; top: 88px; padding: 14px; }
+.summary.floaty{ animation: panelBob 10s ease-in-out infinite; }
+.summ-row{ display:flex; justify-content:space-between; padding:8px 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
+.summ-row:last-child{ border-bottom: 0; }
+.divider{ height:1px; background: rgba(255,255,255,.12); margin: 10px 0; }
+.muted{ opacity:.8; }
+
+/* Animations */
+@keyframes panelBob{ 0%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } 100%{ transform: translateY(0) } }
+
+/* Shake on invalid */
+@keyframes shakeKf{ 0%{ transform: translateX(0) } 25%{ transform: translateX(-6px) } 50%{ transform: translateX(6px) } 75%{ transform: translateX(-4px) } 100%{ transform: translateX(0) } }
+.shake{ animation: shakeKf .3s ease; }
+
+/* Buttons */
+.btn-dark{ background:#242833; border-color:#242833; }
+.btn-dark:hover{ filter: brightness(1.08); }
+.btn-outline-dark{ color:#e9edf7; border-color:rgba(233,237,247,.35); }
+.btn-outline-dark:hover{ background: rgba(233,237,247,.10); }
+[data-theme="light"] .btn-outline-dark{ color:#0f172a; border-color: rgba(0,0,0,.2); }
+
+/* === “Booked!” INTIMATION BANNER === */
+.booked-banner{
+  position: sticky;
+  top: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(16,185,129,.35);
+  background: linear-gradient(180deg, rgba(16,185,129,.18), rgba(16,185,129,.10));
+  color: #eafff3;
+  box-shadow: 0 12px 28px rgba(0,0,0,.25);
+  transform: translateY(-12px);
+  opacity: 0;
+  transition: all .28s ease;
+}
+.booked-banner.show{ transform: translateY(0); opacity: 1; }
+.booked-banner .btn{ border-color: rgba(255,255,255,.35); color: #fff; }
+.booked-banner .btn:hover{ background: rgba(255,255,255,.12); }
+.booked-banner .msg{ font-weight: 600; }

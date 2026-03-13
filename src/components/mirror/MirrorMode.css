@@ -1,0 +1,124 @@
+/* ============ MIRROR — SCOPED ============ */
+/* Everything is prefixed with .mirror so nothing leaks to other pages.      */
+/* Do NOT put :root tokens here. Tokens stay in your global theme CSS only.  */
+
+/* Page background (dark, subtle gradients) */
+.mirror .luxe-bg{
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #1a1f3b 0%, transparent 60%),
+    radial-gradient(1000px 700px at 100% 0%, #2a1e4a 0%, transparent 55%),
+    linear-gradient(180deg, #0b1020 0%, #11152a 100%);
+  min-height:100vh; color:#f6f7ff;
+}
+
+/* Layout */
+.mirror .luxe-page{ max-width:1280px; margin:0 auto; padding:16px; }
+.mirror .luxe-grid{ display:grid; grid-template-columns:1.5fr 1fr; gap:16px; }
+@media (max-width:1100px){ .mirror .luxe-grid{ grid-template-columns:1fr; } }
+
+/* Cards / UI primitives (glass look) */
+.mirror .card{
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius:16px; padding:14px; backdrop-filter: blur(10px);
+  color:#f6f7ff; box-shadow:0 10px 30px rgba(0,0,0,.28);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.mirror .card:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.34); }
+
+.mirror .toolbar{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.mirror .btn{
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+  color:#f6f7ff; border-radius:10px; padding:8px 12px; cursor:pointer;
+}
+.mirror .btn:hover{ background: rgba(255,255,255,.14); }
+.mirror a.btn{ text-decoration:none; }
+.mirror .muted{ color:#c6c9e4; }
+.mirror .chip{
+  display:inline-block; padding:6px 10px; border-radius:999px;
+  background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.16);
+  color:#f6f7ff; font-size:13px;
+}
+
+/* Keep Mirror below the nav */
+.mirror .luxe-page{ --nav-space:72px; padding-top:var(--nav-space); }
+
+/* Camera stage */
+.mirror .luxe-stage{
+  position:relative; height:clamp(420px,52vh,560px);
+  overflow:hidden; border-radius:16px; background:#000;
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.mirror .luxe-video{ display:block; width:100%; height:100%; object-fit:cover; }
+.mirror .luxe-overlay{ position:absolute; inset:0; pointer-events:none; }
+.mirror .luxe-vignette{
+  background: radial-gradient(65% 60% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.28) 100%);
+}
+.mirror .grid-line{ stroke:#ffffff; stroke-opacity:.26; stroke-width:.7; }
+.mirror .luxe-oval{ stroke:#ffffff; stroke-opacity:.34; stroke-width:1.2; fill:none; }
+
+/* Floating dock (controls) */
+.mirror .luxe-dock{
+  position:absolute; left:50%; bottom:10px; transform:translateX(-50%);
+  display:flex; gap:10px; align-items:center;
+  background: rgba(19,23,44,.6); border:1px solid rgba(255,255,255,.16);
+  border-radius:999px; padding:8px 12px; backdrop-filter: blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+.mirror .luxe-dock .btn{ border-radius:999px; }
+.mirror .luxe-dock input[type="range"]{ width:140px; accent-color:#7a6cf4; }
+
+/* RGB bars (tiny chart) */
+.mirror .rgbbar{ width:22px; height:80px; background:rgba(255,255,255,.14); border-radius:6px; overflow:hidden; }
+.mirror .rgbbar > b{ display:block; width:100%; background:currentColor; transition:height .3s ease; }
+.mirror .rgb-R{ color:#ff8080; } .mirror .rgb-G{ color:#9aff9a; } .mirror .rgb-B{ color:#8fbaff; }
+
+/* History thumbnails */
+.mirror .thumb-strip{ display:flex; gap:8px; overflow:auto; padding-bottom:6px; }
+.mirror .thumb-strip img{ width:64px; height:48px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,.16); }
+
+/* Floating “soft tips” (background chips, not heavy particles) */
+.mirror .float-tips{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.mirror .float-tips .tip{
+  position:absolute; left:var(--x,50%); top:110%; transform:translateX(-50%);
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.16);
+  color:#f6f7ff; border-radius:999px; padding:6px 10px; font-size:12px;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.35));
+  animation: mirrorTipFloat var(--dur,12s) linear var(--delay,0s) infinite;
+  white-space:nowrap;
+}
+@keyframes mirrorTipFloat{
+  0%{ transform:translate(-50%,0) scale(.95); opacity:0; }
+  8%{ opacity:.85; }
+  50%{ transform:translate(-50%,-70vh) scale(1.02); opacity:.85; }
+  92%{ opacity:.0; }
+  100%{ transform:translate(-50%,-90vh) scale(1.05); opacity:0; }
+}
+
+/* Analysis Modal (popup) */
+.mirror .lx-modal-backdrop{
+  position:fixed; inset:0; background:rgba(6,8,20,.6);
+  backdrop-filter:blur(8px); display:grid; place-items:center; z-index:60;
+  animation: mirrorFadeIn .18s ease;
+}
+.mirror .lx-modal{
+  width:min(820px,92vw); border-radius:18px; padding:16px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 18px 60px rgba(0,0,0,.45); color:#f6f7ff;
+  animation: mirrorLiftIn .18s ease;
+}
+.mirror .lx-modal header{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.mirror .lx-modal header h3{ margin:0; font-size:20px; }
+.mirror .lx-close{ margin-left:auto; }
+.mirror .lx-row{ display:flex; gap:12px; flex-wrap:wrap; }
+.mirror .lx-col{ flex:1 1 280px; }
+.mirror .lx-badge{
+  display:inline-block; padding:6px 10px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.1); margin:4px 6px 0 0;
+}
+.mirror .lx-gauge{ height:10px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; }
+.mirror .lx-gauge > b{ display:block; height:100%; background:linear-gradient(90deg,#7a6cf4,#35d0ff); width:0%; transition:width .4s ease; }
+
+@keyframes mirrorFadeIn{ from{opacity:0} to{opacity:1} }
+@keyframes mirrorLiftIn{ from{transform:translateY(6px); opacity:.9} to{transform:none; opacity:1} }
