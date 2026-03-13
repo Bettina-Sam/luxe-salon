@@ -1,6 +1,6 @@
 # 💎 Luxe Salon
 
-🌐 **Live Demo:** https://luxe-salon.netlify.app
+🌐 **Live Demo:** https://luxe-salons.netlify.app
 
 ---
 
